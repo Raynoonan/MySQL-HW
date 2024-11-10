@@ -12,8 +12,12 @@ public class ProjectsApp {
   private Scanner scanner = new Scanner(System.in);
   private ProjectService projectsService = new ProjectService();
 
-  private List<String> operations = List.of("1) Create and populate all tables",
-      "2) Add a project");
+  private List<String> operations = List.of(
+      "1) Add a project",
+      "2) List projects",
+      "3) Select a project"
+      );
+  private Object curProject;
 
 
 
@@ -37,10 +41,14 @@ public class ProjectsApp {
             done = exitMenu();
             break;
 
-         
-            
-          case 2:
+          case 1:
             addProject();
+            break;
+          case 2:
+            listProjects();
+            break;
+          case 3:
+            selectProject();
             break;
             
             default:
@@ -52,6 +60,38 @@ public class ProjectsApp {
       }
 
     }
+  }
+
+
+
+  private void selectProject() {
+    List<Project> projects = listProjects();
+    
+    Integer projectId = getIntInput("Enter a project ID");
+    
+    curProject = null;
+    
+    for(Project project : projects) {
+      if(project.getProjectId().equals(projectId)) {
+        curProject = projectsService.fetchProjectById(projectId);
+        break;
+      }
+      }
+    if(Objects.isNull(curProject)) {
+      System.out.println("\nInvalid project selected.");
+    }
+    }
+
+
+
+  private List<Project> listProjects() {
+    List<Project> projects = projectsService.fetchAllProjects();
+    
+    System.out.println("\nProjects:");
+    
+    projects.forEach(project -> System.out.println("   " + project.getProjectId()
+       + ": " + project.getProjectName()));
+    return projects;
   }
 
 
@@ -74,6 +114,7 @@ public class ProjectsApp {
    Project dbProject = projectsService.addProject(project);
    System.out.println("You have sucessfully created project: " + dbProject);
    
+   curProject = projectsService.fetchProjectById(dbProject.getProjectId());
   }
 private BigDecimal getDecimalInput(String prompt) {
   String input = getStringInput(prompt);
