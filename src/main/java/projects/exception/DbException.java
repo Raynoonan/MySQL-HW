@@ -1,5 +1,7 @@
 package projects.exception;
 
+import java.sql.Connection;
+
 public class DbException extends RuntimeException {
 
   public DbException() {
@@ -27,4 +29,12 @@ public class DbException extends RuntimeException {
     // TODO Auto-generated constructor stub
   }
 
-}
+  public static Connection getConnection() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+ 
+  }
+
+

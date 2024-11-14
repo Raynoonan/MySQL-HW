@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Project {
   private Integer projectId;
-  private Project projectName;
+  private String projectName;
   private BigDecimal estimatedHours;
   private BigDecimal actualHours;
   private Integer difficulty;
@@ -31,11 +31,11 @@ public class Project {
     this.projectId = projectId;
   }
 
-  public Project getProjectName() {
+  public String getProjectName() {
     return projectName;
   }
 
-  public void setProjectName(Project project) {
+  public void setProjectName(String project) {
     this.projectName = project;
   }
 
