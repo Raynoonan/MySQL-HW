@@ -196,10 +196,27 @@ public Project insertProject(Project project) {
 
 
 public boolean deleteProject(Integer projectId) {
-  // TODO Auto-generated method stub
-  return false;
+  String sql = "DELETE FROM " + PROJECT_TABLE + " WHERE project_id = ?";
+  try(Connection conn = DbConnection.getConnection()) {
+    startTransaction(conn);
+    
+    try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+      setParameter(stmt, 1, projectId, Integer.class);
+      
+      boolean deleted = stmt.executeUpdate() == 1;
+      
+      commitTransaction(conn);
+      return deleted;
+    }
+    catch (Exception e) {
+      rollbackTransaction(conn);
+      throw new DbException(e);
+    }
 }
-
+  catch (Exception e) {
+    throw new DbException(e);
+  }
+}
 
 
 public boolean modifyProjectDetails(Project project) {

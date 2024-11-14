@@ -16,7 +16,8 @@ public class ProjectsApp {
       "1) Add a project",
       "2) List projects",
       "3) Select a project",
-      "4) Update project details"
+      "4) Update project details",
+      "5) Delete a Project"
       );
   
 
@@ -49,6 +50,8 @@ public class ProjectsApp {
             break;
           case 4:
             updateProjectDetails();
+          case 5:
+            deleteProject();
             
             default:
               System.out.println("\n" + operation + " is not valid. Try again.");
