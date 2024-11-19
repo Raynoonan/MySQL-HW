@@ -50,8 +50,10 @@ public class ProjectsApp {
             break;
           case 4:
             updateProjectDetails();
+            break;
           case 5:
             deleteProject();
+            break;
             
             default:
               System.out.println("\n" + operation + " is not valid. Try again.");
@@ -122,18 +124,15 @@ private void deleteProject() {
 
 
   private void selectProject() {
-    List<Project> projects = listProjects();
+    listProjects();
     
     Integer projectId = getIntInput("Enter a project ID");
     
     curProject = null;
     
-    for(Project project : projects) {
-      if(project.getProjectId().equals(projectId)) {
+ 
         curProject = projectsService.fetchProjectById(projectId);
-        break;
-      }
-      }
+       
     if(Objects.isNull(curProject)) {
       System.out.println("\nInvalid project selected.");
     }
@@ -141,14 +140,14 @@ private void deleteProject() {
 
 
 
-  private List<Project> listProjects() {
+  private void listProjects() {
     List<Project> projects = projectsService.fetchAllProjects();
     
     System.out.println("\nProjects:");
     
     projects.forEach(project -> System.out.println("   " + project.getProjectId()
        + ": " + project.getProjectName()));
-    return projects;
+   
   }
 
 
@@ -210,6 +209,11 @@ private BigDecimal getDecimalInput(String prompt) {
     System.out.println("Here's what you can do:");
 
     operations.forEach(op -> System.out.println("   " + op));
+    if (Objects.isNull(curProject)) {
+      System.out.println("\nYou do not have an active project.");
+  } else {
+      System.out.println("\n You are viewing: " + curProject);
+  }
   }
 
 

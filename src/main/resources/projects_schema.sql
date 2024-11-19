@@ -11,8 +11,8 @@ CREATE TABLE project (
 	project_name VARCHAR(128) not null,
 	 estimated_hours DECIMAL (7,2), 
 	actual_hours DECIMAL (7,2),
-	 difficulty VARCHAR(64) NOT NULL,
-	  notes VARCHAR(64) NOT null,
+	 difficulty INT,
+	  notes TEXT,
 	  primary key (project_id)
 	  
 	  );
@@ -20,8 +20,8 @@ CREATE TABLE project (
 CREATE TABLE step (
 	step_id INT AUTO_INCREMENT NOT NULL,
 	 project_id INT  NOT NULL,
-	step_text TEXT,
-	 step_order INT,
+	step_text TEXT NOT NULL,
+	 step_order INT NOT NULL,
 	 primary key (step_id),
 	 foreign key (project_id) references project (project_id) on delete cascade
 );
@@ -47,8 +47,8 @@ CREATE TABLE material (
 	material_id INT AUTO_INCREMENT NOT NULL, 
 	project_id INT NOT NULL,
 	material_name VARCHAR(128) NOT NULL,
-	 num_required INT NOT NULL,
-	 cost INT NOT NULL,
+	 num_required INT,
+	 cost DECIMAL(7,2),
 	 primary key (material_id),
 	 foreign key (project_id) references project (project_id) on delete cascade
 	

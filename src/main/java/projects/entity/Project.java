@@ -35,8 +35,8 @@ public class Project {
     return projectName;
   }
 
-  public void setProjectName(String project) {
-    this.projectName = project;
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
   }
 
   public BigDecimal getEstimatedHours() {

@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -91,7 +89,7 @@ private List<Category> fetchCategoriesForProject(Connection conn,
 
 private List<Step> fetchStepsForProject(Connection conn, Integer projectId)
 throws SQLException{
-  String sql = "SELECT * FROM " + STEP_TABLE + " WHERE projectId = ?";
+  String sql = "SELECT * FROM " + STEP_TABLE + " WHERE project_id = ?";
 
 try(PreparedStatement stmt = conn.prepareStatement(sql)) {
   setParameter(stmt, 1, projectId, Integer.class);
@@ -179,7 +177,7 @@ public Project insertProject(Project project) {
       
       Integer projectId = getLastInsertId(conn, PROJECT_TABLE);
       commitTransaction(conn);
-      
+      System.out.println("Dao 180");
       project.setProjectId(projectId);
       return project;
     }
@@ -229,7 +227,7 @@ public boolean modifyProjectDetails(Project project) {
       + "notes = ? "
       + "WHERE project_id = ?";
   
-  try(Connection conn = DbException.getConnection()) {
+  try(Connection conn = DbConnection.getConnection()) {
     startTransaction(conn);
     
     try(PreparedStatement stmt = conn.prepareStatement(sql)) {
